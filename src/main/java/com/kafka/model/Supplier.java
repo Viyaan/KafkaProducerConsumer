@@ -1,4 +1,4 @@
-package com.kafka.producer.model;
+package com.kafka.model;
 
 /**
  * 

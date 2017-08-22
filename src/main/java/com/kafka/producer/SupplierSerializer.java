@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 
-import com.kafka.producer.model.Supplier;
+import com.kafka.model.Supplier;
 
 /**
  * @author Viyaan

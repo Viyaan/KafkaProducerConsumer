@@ -14,7 +14,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
-import com.kafka.producer.model.Supplier;
+import com.kafka.model.Supplier;
 
 /**
  * @author Rasool.Shaik

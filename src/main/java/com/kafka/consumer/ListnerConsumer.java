@@ -3,7 +3,7 @@ import java.util.*;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.*;
 
-public class RandomConsumer{
+public class ListnerConsumer{
     
     
     public static void main(String[] args) throws Exception{
