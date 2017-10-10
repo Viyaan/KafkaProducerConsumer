@@ -1,4 +1,4 @@
-package com.kafka.consumer.avro;
+package com.kafka.avro.consumer;
 
 
 

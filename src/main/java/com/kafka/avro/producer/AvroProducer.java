@@ -1,4 +1,4 @@
-package com.kafka.producer.avro;
+package com.kafka.avro.producer;
 
 import java.io.File;
 import java.io.IOException;
