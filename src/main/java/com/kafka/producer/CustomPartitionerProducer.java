@@ -25,10 +25,10 @@ public class CustomPartitionerProducer {
 
 		Producer<String, String> producer = new KafkaProducer<>(props);
 		for (int i = 0; i < 10; i++)
-			producer.send(new ProducerRecord<>(topicName, "SSP" + i, "500" + i));
+			producer.send(new ProducerRecord<String, String>(topicName, "SSP" + i, "500" + i));
 
 		for (int i = 0; i < 10; i++)
-			producer.send(new ProducerRecord<>(topicName, "TSS", "500" + i));
+			producer.send(new ProducerRecord<String, String>(topicName, "TSS", "500" + i));
 
 		producer.close();
 	}

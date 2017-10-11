@@ -27,7 +27,7 @@ public class CustomPartitionerConsumer {
 		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeSerializer");
 		props.put("enable.auto.commit", "false"); // this property will disable auto-commit feature and the consumer will not commit offset automatically by kafka broker.
 
-		Consumer<String, String> consumer = new KafkaConsumer<>(props);
+		Consumer<String, String> consumer = new KafkaConsumer<String, String>(props);
 
 		// If you want Automatic group management and partition assignment. we should subscribe to the topic.
 		// But in this example, we don't want kafka to assign partition to consumers. So we created as below  

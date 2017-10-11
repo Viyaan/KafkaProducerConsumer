@@ -3,21 +3,18 @@ package com.kafka.avro.consumer;
 
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.Properties;
 
-import org.apache.avro.generic.IndexedRecord;
-import org.apache.kafka.common.errors.SerializationException;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 
-import io.confluent.kafka.serializers.KafkaAvroDecoder;
-import kafka.consumer.ConsumerConfig;
-import kafka.consumer.ConsumerIterator;
-import kafka.consumer.KafkaStream;
-import kafka.javaapi.consumer.ConsumerConnector;
-import kafka.message.MessageAndMetadata;
-import kafka.utils.VerifiableProperties;
+import com.kafka.avro.model.Employee;
+
+import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 
 
 public class AvroConsumer {
@@ -27,36 +24,29 @@ public class AvroConsumer {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	public static void main(String[] args)  {
 		Properties props = new Properties();
-		props.put("zookeeper.connect", "localhost:2181");
-		props.put("group.id", "group1");
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "group1");
 		props.put("schema.registry.url", "http://localhost:8081");
+		props.put("specific.avro.reader", "true");
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,KafkaAvroDeserializer.class);
 
 		String topic = "avro";
-		Map<String, Integer> topicCountMap = new HashMap<>();
-		topicCountMap.put(topic, new Integer(1));
-
-		VerifiableProperties vProps = new VerifiableProperties(props);
-		KafkaAvroDecoder keyDecoder = new KafkaAvroDecoder(vProps);
-		KafkaAvroDecoder valueDecoder = new KafkaAvroDecoder(vProps);
-
-		ConsumerConnector consumer = kafka.consumer.Consumer.createJavaConsumerConnector(new ConsumerConfig(props));
-
-		Map<String, List<KafkaStream<Object, Object>>> consumerMap = consumer.createMessageStreams(
-		    topicCountMap, keyDecoder, valueDecoder);
-		KafkaStream stream = consumerMap.get(topic).get(0);
-		ConsumerIterator it = stream.iterator();
-		while (it.hasNext()) {
-		  MessageAndMetadata messageAndMetadata = it.next();
-		  try {
-		    String key = (String) messageAndMetadata.key();
-		    IndexedRecord value = (IndexedRecord) messageAndMetadata.message();
-
-		    
-		  } catch(SerializationException e) {
-		    // may need to do something with it
-		  }
+		
+		KafkaConsumer<String,Employee> consumer = new  KafkaConsumer<String,Employee>(props);
+		consumer.subscribe(Arrays.asList(topic));
+		try {
+			while(true) {
+				ConsumerRecords<String,Employee> records = consumer.poll(0);
+				for(ConsumerRecord<String,Employee>record:records) {
+					System.out.println(record.value().getEid() + " "+record.value().getSalary());
+				}
+			}
+		}finally {
+			consumer.close();
 		}
+
 	}
 }

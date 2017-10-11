@@ -19,7 +19,7 @@ public class ListnerConsumer{
             props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
             props.put("enable.auto.commit", "false");
 
-            consumer = new KafkaConsumer<>(props);
+            consumer = new KafkaConsumer<String, String>(props);
             RebalanceListner rebalanceListner = new RebalanceListner(consumer);
             
             consumer.subscribe(Arrays.asList(topicName),rebalanceListner);

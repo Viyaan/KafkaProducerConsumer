@@ -38,7 +38,7 @@ public class SupplierProducer {
         props.put("retries", 0);
 		props.put("max.in.flight.requests.per.connection", "1");
 
-		Producer<String, Supplier> producer = new KafkaProducer<>(props);
+		Producer<String, Supplier> producer = new KafkaProducer<String, Supplier>(props);
 
 		SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
 
