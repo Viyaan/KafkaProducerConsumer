@@ -3,22 +3,23 @@ package com.kafka.avro.consumer;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.apache.avro.generic.IndexedRecord;
+import org.apache.kafka.common.errors.SerializationException;
+
+import io.confluent.kafka.serializers.KafkaAvroDecoder;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
-import io.confluent.kafka.serializers.KafkaAvroDecoder;
 import kafka.message.MessageAndMetadata;
 import kafka.utils.VerifiableProperties;
-import org.apache.kafka.common.errors.SerializationException;
-import java.util.*;
 
 
-/**
- * @author Rasool.Shaik
- *
- */
 public class AvroConsumer {
 
 	/**
@@ -57,3 +58,5 @@ public class AvroConsumer {
 		    // may need to do something with it
 		  }
 		}
+	}
+}
